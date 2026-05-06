@@ -93,34 +93,6 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
         current.Next = newNode;
     }
 
-    public void Remove(T data)
-    {
-        var current = _head;
-        while (current != null)
-        {
-            if (current.Data!.Equals(data))
-            {
-                if (current == _head) // Found at the head
-                {
-                    _head = _head.Next;
-                    _head!.Previous = null;
-                }
-                else if (current == _tail) // Found at the tail
-                {
-                    _tail = _tail.Previous;
-                    _tail!.Next = null;
-                }
-                else // Found in the middle
-                {
-                    current.Previous!.Next = current.Next;
-                    current.Next!.Previous = current.Previous;
-                }
-                return;
-            }
-            current = current.Next;
-        }
-    }
-
     public void Reverse()
     {
         if (_head == null) return;
@@ -209,6 +181,56 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
         {
             var stars = new string('*', pair.Value);
             Console.WriteLine($"{pair.Key} {stars}");
+        }
+    }
+
+    public void Remove(T data)
+    {
+        var current = _head;
+        while (current != null)
+        {
+            if (current.Data!.Equals(data))
+            {
+                RemoveNode(current);
+                return; // Only remove the first occurrence
+            }
+            current = current.Next;
+        }
+    }
+
+    public void RemoveAll(T data)
+    {
+        var current = _head;
+        while (current != null)
+        {
+            var next = current.Next;
+            if (current.Data!.Equals(data))
+                RemoveNode(current);
+            current = next;
+        }
+    }
+
+    private void RemoveNode(Node<T> node)
+    {
+        if (node == _head && node == _tail) // Only node in the list
+        {
+            _head = null;
+            _tail = null;
+        }
+        else if (node == _head) // Node is in the head
+        {
+            _head = _head.Next;
+            _head!.Previous = null;
+        }
+        else if (node == _tail) // Node is in the tail
+        {
+            _tail = _tail.Previous;
+            _tail!.Next = null;
+        }
+        else // Node is in the middle
+        {
+            node.Previous!.Next = node.Next;
+            node.Next!.Previous = node.Previous;
         }
     }
 
