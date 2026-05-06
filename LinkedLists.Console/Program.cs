@@ -31,6 +31,21 @@ do
             Console.WriteLine(list.ToString());
             break;
 
+        case "5": // Mostrar la(s) moda(s)
+            var modes = list.GetModes();
+            if (modes.Count == 0)
+                Console.WriteLine("The list is empty.");
+            else if (modes.Count == 1)
+                Console.WriteLine($"Mode: {modes[0]}");
+            else
+                Console.WriteLine("Modes: " + string.Join(", ", modes));
+            break;
+
+        case "6": // Mostrar gráfico
+            Console.WriteLine("Chart. ");
+            list.PrintChart();
+            break;
+
         case "0":
             Console.WriteLine("Exiting...");
             break;
@@ -48,6 +63,8 @@ string Menu()
     Console.WriteLine("2. Show forward");
     Console.WriteLine("3. Show backward");
     Console.WriteLine("4. Sort descending");
+    Console.WriteLine("5. Show mode(s)");
+    Console.WriteLine("6. Show chart");
     Console.WriteLine("0. Exit");
     Console.Write("Enter your option: ");
     return Console.ReadLine() ?? string.Empty;

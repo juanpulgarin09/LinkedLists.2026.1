@@ -160,6 +160,51 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
         } while (swapped);
     }
 
+    public List<T> GetModes()
+    {
+        var counts = new Dictionary<T, int>();
+        var current = _head;
+        while (current != null)
+        {
+            if (counts.ContainsKey(current.Data!))
+                counts[current.Data!]++;
+            else
+                counts[current.Data!] = 1;
+            current = current.Next;
+        }
+
+        int topCount = 0;
+        foreach (var count in counts.Values)
+            if (count > topCount) topCount = count;
+
+        var modes = new List<T>();
+        foreach (var pair in counts)
+            if (pair.Value == topCount)
+                modes.Add(pair.Key);
+
+        return modes;
+    }
+
+    public void PrintChart()
+    {
+        var counts = new Dictionary<T, int>();
+        var current = _head;
+        while (current != null)
+        {
+            if (counts.ContainsKey(current.Data!))
+                counts[current.Data!]++;
+            else
+                counts[current.Data!] = 1;
+            current = current.Next;
+        }
+
+        foreach (var pair in counts)
+        {
+            var stars = new string('*', pair.Value);
+            Console.WriteLine($"{pair.Key} {stars}");
+        }
+    }
+
     override public string ToString()
     {
         var current = _head;
