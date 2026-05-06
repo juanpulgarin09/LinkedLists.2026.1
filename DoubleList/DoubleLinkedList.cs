@@ -54,7 +54,6 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
     {
         var newNode = new Node<T>(data);
 
-        // Lista vacía → el nodo es cabeza y cola
         if (_head == null)
         {
             _head = newNode;
@@ -62,7 +61,6 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
             return;
         }
 
-        // El nuevo dato es menor o igual al primero → va al inicio
         if (data.CompareTo(_head.Data) <= 0)
         {
             newNode.Next = _head;
@@ -71,21 +69,19 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
             return;
         }
 
-        // Busca la posición correcta en el medio o al final
         var current = _head;
         while (current.Next != null && current.Next.Data!.CompareTo(data) <= 0)
         {
             current = current.Next;
         }
 
-        // Insertar después de current
         newNode.Next = current.Next;
         newNode.Previous = current;
 
         if (current.Next != null)
-            current.Next.Previous = newNode; // hay nodo después → actualiza su Previous
+            current.Next.Previous = newNode;
         else
-            _tail = newNode; // no hay nodo después → el nuevo es la cola
+            _tail = newNode;
 
         current.Next = newNode;
     }
@@ -120,12 +116,48 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
 
     public void Reverse()
     {
-        throw new NotImplementedException();
+        if (_head == null) return;
+
+        bool swapped;
+        do
+        {
+            swapped = false;
+            var current = _head;
+            while (current.Next != null)
+            {
+                if (current.Data!.CompareTo(current.Next.Data) < 0)
+                {
+                    var temp = current.Data;
+                    current.Data = current.Next.Data;
+                    current.Next.Data = temp;
+                    swapped = true;
+                }
+                current = current.Next;
+            }
+        } while (swapped);
     }
 
     public void Sort()
     {
-        throw new NotImplementedException();
+        if (_head == null) return;
+
+        bool swapped;
+        do
+        {
+            swapped = false;
+            var current = _head;
+            while (current.Next != null)
+            {
+                if (current.Data!.CompareTo(current.Next.Data) < 0)
+                {
+                    var temp = current.Data;
+                    current.Data = current.Next.Data;
+                    current.Next.Data = temp;
+                    swapped = true;
+                }
+                current = current.Next;
+            }
+        } while (swapped);
     }
 
     override public string ToString()

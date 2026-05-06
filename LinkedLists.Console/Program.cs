@@ -25,6 +25,12 @@ do
             Console.WriteLine("Backward: " + list.ToStringReverse());
             break;
 
+        case "4": // Ordenar descendentemente
+            list.Sort();
+            Console.WriteLine("List sorted descending:");
+            Console.WriteLine(list.ToString());
+            break;
+
         case "0":
             Console.WriteLine("Exiting...");
             break;
@@ -41,6 +47,7 @@ string Menu()
     Console.WriteLine("1. Add (ordered ascending)");
     Console.WriteLine("2. Show forward");
     Console.WriteLine("3. Show backward");
+    Console.WriteLine("4. Sort descending");
     Console.WriteLine("0. Exit");
     Console.Write("Enter your option: ");
     return Console.ReadLine() ?? string.Empty;
