@@ -2,7 +2,7 @@
 
 namespace DoubleList;
 
-public class DoubleLinkedList<T> : ILinkedList<T>
+public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
 {
     private Node<T>? _head;
     private Node<T>? _tail;
@@ -52,7 +52,42 @@ public class DoubleLinkedList<T> : ILinkedList<T>
 
     public void InsertOrdered(T data)
     {
-        throw new NotImplementedException();
+        var newNode = new Node<T>(data);
+
+        // Lista vacía → el nodo es cabeza y cola
+        if (_head == null)
+        {
+            _head = newNode;
+            _tail = newNode;
+            return;
+        }
+
+        // El nuevo dato es menor o igual al primero → va al inicio
+        if (data.CompareTo(_head.Data) <= 0)
+        {
+            newNode.Next = _head;
+            _head.Previous = newNode;
+            _head = newNode;
+            return;
+        }
+
+        // Busca la posición correcta en el medio o al final
+        var current = _head;
+        while (current.Next != null && current.Next.Data!.CompareTo(data) <= 0)
+        {
+            current = current.Next;
+        }
+
+        // Insertar después de current
+        newNode.Next = current.Next;
+        newNode.Previous = current;
+
+        if (current.Next != null)
+            current.Next.Previous = newNode; // hay nodo después → actualiza su Previous
+        else
+            _tail = newNode; // no hay nodo después → el nuevo es la cola
+
+        current.Next = newNode;
     }
 
     public void Remove(T data)
