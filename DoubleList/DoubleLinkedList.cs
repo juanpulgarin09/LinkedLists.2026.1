@@ -15,7 +15,14 @@ public class DoubleLinkedList<T> : ILinkedList<T> where T : IComparable<T>
 
     public bool Contains(T data)
     {
-        throw new NotImplementedException();
+        var current = _head;
+        while (current != null)
+        {
+            if (current.Data!.Equals(data))
+                return true;
+            current = current.Next;
+        }
+        return false;
     }
 
     public void InsertAtBeginning(T data)

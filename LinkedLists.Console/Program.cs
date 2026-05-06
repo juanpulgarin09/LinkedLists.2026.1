@@ -46,6 +46,15 @@ do
             list.PrintChart();
             break;
 
+        case "7": // Existe
+            Console.Write("Enter a value to search: ");
+            var searchVal = Console.ReadLine() ?? string.Empty;
+            bool found = list.Contains(searchVal);
+            Console.WriteLine(found
+                ? $"Value '{searchVal}' EXISTS in the list."
+                : $"Value '{searchVal}' does NOT exist in the list.");
+            break;
+
         case "0":
             Console.WriteLine("Exiting...");
             break;
@@ -65,6 +74,7 @@ string Menu()
     Console.WriteLine("4. Sort descending");
     Console.WriteLine("5. Show mode(s)");
     Console.WriteLine("6. Show chart");
+    Console.WriteLine("7. Exists");
     Console.WriteLine("0. Exit");
     Console.Write("Enter your option: ");
     return Console.ReadLine() ?? string.Empty;
